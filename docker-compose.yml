@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: mecadesk_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=mecadesk_db
+      - POSTGRES_USER=mecadesk_user
+      - POSTGRES_PASSWORD=mecadesk_pass
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: mecadesk_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=django-insecure-mecadesk-key-change-in-prod
+      - DEBUG=1
+      - DB_NAME=mecadesk_db
+      - DB_USER=mecadesk_user
+      - DB_PASSWORD=mecadesk_pass
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      db:
+        condition: service_started
+
+  frontend:
+    build: ./frontend
+    container_name: mecadesk_frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+
+volumes:
+  postgres_data:

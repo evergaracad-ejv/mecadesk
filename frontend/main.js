@@ -1,0 +1,1 @@
+console.log("MecaDesk Frontend conectado correctamente.");
