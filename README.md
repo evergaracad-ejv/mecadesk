@@ -47,3 +47,16 @@ Fase de transición entre la especificación teórica del sistema y la construcc
 
 ### 6. Codificación (Coding)
 Implementación práctica del stack tecnológico utilizando contenedores aislados de Docker para asegurar la portabilidad y paridad entre entornos de desarrollo y producción.
+
+## 🔐 Acceso al Panel de Administración (Django Admin)
+
+Para gestionar los usuarios, roles y modelos del sistema desde la interfaz administrativa:
+
+* **URL de acceso:** `http://localhost:8000/admin/`
+* **Usuario:** `admin`
+* **Contraseña por defecto:** `[admin123]`
+
+> **Nota:** Si necesitas crear o restablecer el superusuario en un entorno nuevo o dentro del contenedor de Docker, ejecuta:
+> ```bash
+> docker-compose exec backend python manage.py createsuperuser
+> ```
